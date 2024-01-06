@@ -1,1 +1,1 @@
-const database='mongodb+srv://gangadharana01:<password>@cluster0.zunq50g.mongodb.net/?retryWrites=true&w=majority'
+export const backendUrl = import.meta.env.VITE_BACKEND_URL;

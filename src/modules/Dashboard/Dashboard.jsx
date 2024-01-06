@@ -3,6 +3,7 @@ import Avatar from "../../assets/avatar.svg";
 import Input from "../../components/Input";
 import img1 from "../../assets/img1.png";
 import { io } from "socket.io-client";
+import { backendUrl } from "../../../.config";
 
 const Dashboard = () => {
   const [user, setUser] = useState(
@@ -40,7 +41,7 @@ const Dashboard = () => {
     const loggedInUser = JSON.parse(localStorage.getItem("user:detail"));
     const fetchConversations = async () => {
       const res = await fetch(
-        `http://localhost:8000/api/conversation/${loggedInUser?.id}`,
+        `${backendUrl}/conversation/${loggedInUser?.id}`,
         {
           method: "GET",
           headers: {
@@ -57,7 +58,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/api/users/${user?.id}`, {
+        const res = await fetch(`${backendUrl}/users/${user?.id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -74,7 +75,7 @@ const Dashboard = () => {
 
   const fetchMessages = async (conversationId, receiver) => {
     const res = await fetch(
-      `http://localhost:8000/api/message/${conversationId}?senderId=${user?.id}&&receiverId=${receiver?.receiverId}`,
+      `${backendUrl}/message/${conversationId}?senderId=${user?.id}&&receiverId=${receiver?.receiverId}`,
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -91,7 +92,7 @@ const Dashboard = () => {
       message,
       conversationId:messages?.conversationId
     })
-    const res = await fetch(`http://localhost:8000/api/message`, {
+    const res = await fetch(`${backendUrl}/message`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

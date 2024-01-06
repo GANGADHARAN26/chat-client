@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input";
 import { useNavigate } from "react-router";
+import { backendUrl } from "../../../.config";
 const Form = ({
   // eslint-disable-next-line react/prop-types
   isSignInPage = false,
@@ -17,7 +18,7 @@ const Form = ({
   const handleSubmit=async(e)=>{
     console.log('data', data);
     e.preventDefault();
-    const res=await fetch(`http://localhost:8000/api/${isSignInPage ?'login' : 'register'}`,{
+    const res=await fetch(`${backendUrl}/${isSignInPage ?'login' : 'register'}`,{
       method:'POST',
       headers: {'Content-Type': 'application/json'
     },
