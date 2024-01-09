@@ -16,10 +16,12 @@ const Dashboard = () => {
   const [socket, setSocket] = useState(null);
   const messageRef=useRef(null);
  console.log("messages: " + messages);
+  // useEffect(() => {
+  //   setSocket(io("http://localhost:8080"));
+  // }, []);
   useEffect(() => {
-    setSocket(io("http://localhost:8080"));
+    setSocket(io("https://chat-server-pt34.onrender.com/api"));
   }, []);
-
   useEffect(() => {
     socket?.emit("addUser", user?.id);
     socket?.on("getUsers", users=> {
