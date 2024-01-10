@@ -11,8 +11,8 @@ const Form = ({
     ...(!isSignInPage && {
       fullName: "",
     }),
-    email: "",
-    password: "",
+    email: "gangadharana01@gmail.com",
+    password: "password",
   });
   const navigate=useNavigate();
   const handleSubmit=async(e)=>{

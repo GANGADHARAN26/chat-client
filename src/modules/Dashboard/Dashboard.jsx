@@ -119,7 +119,7 @@ const Dashboard = () => {
           </div>
         </div>
         <hr />
-        <div className="mx-14 mt-10">
+        <div className="mx-10 mt-10">
           <div className="text-primary text-lg">Messages</div>
           <div>
             {conversation.length > 0 ? (
