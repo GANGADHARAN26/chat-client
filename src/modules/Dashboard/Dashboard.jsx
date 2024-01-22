@@ -10,18 +10,21 @@ const Dashboard = () => {
     JSON.parse(localStorage.getItem("user:detail"))
   );
   const [conversation, setConversation] = useState([]);
+  const [update,setUpdate]=useState({conversationId:"", user:""})
   const [messages, setMessages] = useState({});
   const [message, setMessage] = useState("");
   const [users, setUsers] = useState([]);
   const [socket, setSocket] = useState(null);
   const messageRef=useRef(null);
- console.log("messages: " + messages);
-  // useEffect(() => {
-  //   setSocket(io("http://localhost:8080"));
-  // }, []);
+  console.log("update",update);
+//  useEffect(() => {
+//     setSocket(io.connect("http://localhost:8000")); 
+//   }, []);
+
   useEffect(() => {
-    setSocket(io("https://chat-server-pt34.onrender.com/api"));
+    setSocket(io.connect("https://chat-server-pt34.onrender.com")); 
   }, []);
+
   useEffect(() => {
     socket?.emit("addUser", user?.id);
     socket?.on("getUsers", users=> {
@@ -73,9 +76,10 @@ const Dashboard = () => {
       }
     };
     fetchUsers();
-  }, []);
+  }, [message]);
 
   const fetchMessages = async (conversationId, receiver) => {
+    setUpdate({conversationId:conversationId,user:receiver}) 
     const res = await fetch(
       `${backendUrl}/message/${conversationId}?senderId=${user?.id}&&receiverId=${receiver?.receiverId}`,
       {
@@ -88,6 +92,10 @@ const Dashboard = () => {
     setMessages({ messages: resData, receiver, conversationId });
   };
   const sendMessage = async (e) => {
+    console.log("message",message);
+    setTimeout(() => {
+      fetchMessages(update.conversationId,update.user)
+    }, 2000);
     socket?.emit('sendMessage', {
       senderId:user?.id,
       receiverId:messages?.receiver?.receiverId,
@@ -284,7 +292,6 @@ const Dashboard = () => {
         <div>
           {users.length > 0 ? (
             users.map(({ userId, user }) => {
-              console.log("conversation", conversation);
               return (
                 <div
                   className="flex  items-center py-3 border-b border-b-gray-300"
